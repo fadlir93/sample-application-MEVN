@@ -18,11 +18,12 @@ postRoutes.route('/add').post(function (req, res) {
 
 //Defined get data(index or listing) route
 postRoutes.route('/').get(function (req, res) {
-    Post.findById(id, function (err, post) {
+    Post.find(function (err, posts) {
         if(err) {
             res.json(err)
-        }
+        } else {
         res.json(posts);
+        }
     });
 });
 
