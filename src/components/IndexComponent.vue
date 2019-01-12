@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-10"></div>
             <div class="col-md-2">
-                <router-link :to="{name: 'home'}" class="btn btn-primary">Create Post </router-link>
+                <router-link :to="{name: 'create'}" class="btn btn-primary">Create Post </router-link>
             </div>
         </div><br />
 
@@ -20,8 +20,8 @@
                 <tr v-for="post in posts" :key="post._id">
                     <td>{{ post.title }}</td>
                     <td>{{ post.body }}</td>
-                    <td><router-link :to="{name: 'edit', params: { id: post_id }}" class="btn btn-primary"> Edit </router-link></td>
-                    <td><button class="btn btn-danger"> Delete </button></td>
+                    <td><router-link :to="{name: 'edit', params: { id: post._id }}" class="btn btn-primary"> Edit </router-link></td>
+                    <td><button class="btn btn-danger" @click.prevent="deletePost(post._id)"> Delete </button></td>
                 </tr>
             </tbody>
         </table>
@@ -40,6 +40,15 @@
             this.axios.get(uri).then(response => {
                 this.posts = response.data;
             });
+        },
+        methods: {
+            deletePost(id)
+            {
+                let uri = `http://localhost:4000/posts/delete/${id}`;
+                this.axios.delete(uri).then(response => {
+                    this.posts.splice(this.posts.indexOf(id), 1);
+                });
+            }
         }
     }
 </script>

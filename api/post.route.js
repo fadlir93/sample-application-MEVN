@@ -33,15 +33,16 @@ postRoutes.route('/edit/:id').get(function (req, res) {
     Post.findById(id, function (err, post) {
         if(err) {
             res.json(err);
-        }
+        } else {
         res.json(post);
+        }
     });
 });
 
 //Defined update route
 postRoutes.route('/update/:id').post(function (req, res) {
     Post.findById(req.params.id, function(err, post) {
-        if(!pos) {
+        if(!post) {
             res.status(404).send("data is not found");
         } else {
             post.title = req.body.title;
